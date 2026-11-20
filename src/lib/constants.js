@@ -1,5 +1,3 @@
-import { UserPreferences } from './types';
-
 export const SUBJECT_COLORS = [
   '#6366f1',
   '#8b5cf6',
@@ -26,9 +24,9 @@ export const NOTE_COLORS = [
   '#f0fdf4',
 ];
 
-export const DEFAULT_PREFERENCES: UserPreferences = {
+export const DEFAULT_PREFERENCES = {
   dailyStudyHours: 4,
   preferredStartTime: '09:00',
   breakDuration: 15,
-  geminiApiKey: '',
+  groqApiKey: '',
 };
