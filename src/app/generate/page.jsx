@@ -82,43 +82,6 @@ export default function GeneratePage() {
         </p>
       </div>
 
-      {/* Prerequisites Check */}
-      <div className="bg-white rounded-2xl p-6 border border-slate-100 mb-6">
-        <h3 className="text-base font-semibold text-slate-800 mb-4">Prerequisites</h3>
-        <div className="space-y-3">
-          <div className="flex items-center gap-3">
-            {hasApiKey ? (
-              <CheckCircle className="w-5 h-5 text-emerald-500" />
-            ) : (
-              <AlertCircle className="w-5 h-5 text-red-400" />
-            )}
-            <span className={`text-sm ${hasApiKey ? 'text-slate-600' : 'text-red-500'}`}>
-              Groq API Key {hasApiKey ? 'configured' : 'not set'}
-            </span>
-            {!hasApiKey && (
-              <Link href="/settings" className="text-xs text-teal-600 hover:underline ml-auto">
-                Set in Settings →
-              </Link>
-            )}
-          </div>
-          <div className="flex items-center gap-3">
-            {subjects.length > 0 ? (
-              <CheckCircle className="w-5 h-5 text-emerald-500" />
-            ) : (
-              <AlertCircle className="w-5 h-5 text-red-400" />
-            )}
-            <span className={`text-sm ${subjects.length > 0 ? 'text-slate-600' : 'text-red-500'}`}>
-              {subjects.length} subject{subjects.length !== 1 ? 's' : ''} added
-            </span>
-            {subjects.length === 0 && (
-              <Link href="/subjects" className="text-xs text-teal-600 hover:underline ml-auto">
-                Add Subjects →
-              </Link>
-            )}
-          </div>
-        </div>
-      </div>
-
       {/* Configuration Summary */}
       <div className="bg-white rounded-2xl p-6 border border-slate-100 mb-6">
         <h3 className="text-base font-semibold text-slate-800 mb-4">Plan Configuration</h3>
@@ -164,9 +127,9 @@ export default function GeneratePage() {
       <div className="text-center">
         <button
           onClick={handleGenerate}
-          disabled={loading || !hasApiKey || subjects.length === 0}
+          disabled={loading}
           className={`inline-flex items-center gap-3 px-8 py-4 rounded-2xl text-base font-semibold transition-all ${
-            loading || !hasApiKey || subjects.length === 0
+            loading
               ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
               : 'gradient-primary text-white hover:shadow-xl hover:shadow-teal-200 hover:-translate-y-0.5'
           }`}

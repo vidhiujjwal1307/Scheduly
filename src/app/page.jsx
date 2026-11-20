@@ -1,268 +1,304 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import {
-  BookOpen,
-  Calendar,
-  Clock,
-  TrendingUp,
-  Target,
-  CheckCircle2,
-  AlertTriangle,
-  Sparkles,
-} from 'lucide-react';
 import Link from 'next/link';
-import { getSubjects, getActiveStudyPlan, getNotes } from '@/lib/storage';
-import { format, differenceInDays, parseISO, isAfter } from 'date-fns';
-import toast from 'react-hot-toast';
+import {
+  ArrowRight,
+  BookOpen,
+  CalendarDays,
+  Check,
+  CheckCircle2,
+  Clock3,
+  GraduationCap,
+  Sparkles,
+  Target,
+} from 'lucide-react';
 
-export default function Dashboard() {
-  const [subjects, setSubjects] = useState([]);
-  const [plan, setPlan] = useState(null);
-  const [noteCount, setNoteCount] = useState(0);
-  const [mounted, setMounted] = useState(false);
+const features = [
+  {
+    icon: Target,
+    title: 'Plan around your exams',
+    description: 'Add subjects, topics, priorities, and exam dates in one simple place.',
+  },
+  {
+    icon: CalendarDays,
+    title: 'Know what to study today',
+    description: 'Turn your goals into a clear schedule you can follow one session at a time.',
+  },
+  {
+    icon: CheckCircle2,
+    title: 'See your progress build',
+    description: 'Mark sessions complete and keep your momentum visible on the calendar.',
+  },
+];
 
-  useEffect(() => {
-    Promise.all([getSubjects(), getActiveStudyPlan(), getNotes()])
-      .then(([loadedSubjects, loadedPlan, notes]) => {
-        setSubjects(loadedSubjects);
-        setPlan(loadedPlan);
-        setNoteCount(notes.length);
-      })
-      .catch((error) => toast.error(error instanceof Error ? error.message : 'Failed to load dashboard'))
-      .finally(() => setMounted(true));
-  }, []);
+const steps = [
+  { number: '01', title: 'Add your subjects', description: 'Enter your topics and exam dates.' },
+  { number: '02', title: 'Create a study plan', description: 'Set your available time and generate a plan.' },
+  { number: '03', title: 'Make steady progress', description: 'Follow your calendar and check off each session.' },
+];
 
-  if (!mounted) {
-    return (
-      <div className="p-8 flex items-center justify-center h-full">
-        <div className="animate-pulse text-slate-400">Loading...</div>
-      </div>
-    );
-  }
-
-  const today = new Date();
-  const todayStr = format(today, 'yyyy-MM-dd');
-
-  const todaySessions = plan?.sessions.filter((s) => s.date === todayStr) || [];
-  const completedToday = todaySessions.filter((s) => s.completed).length;
-  const totalSessions = plan?.sessions.length || 0;
-  const completedTotal = plan?.sessions.filter((s) => s.completed).length || 0;
-  const progressPercent = totalSessions > 0 ? Math.round((completedTotal / totalSessions) * 100) : 0;
-
-  const upcomingExams = subjects
-    .filter((s) => isAfter(parseISO(s.examDate), today))
-    .sort((a, b) => parseISO(a.examDate).getTime() - parseISO(b.examDate).getTime())
-    .slice(0, 4);
-
-  const stats = [
-    {
-      label: 'Subjects',
-      value: subjects.length,
-      icon: BookOpen,
-      color: 'bg-teal-50 text-teal-700',
-      iconColor: 'text-teal-600',
-    },
-    {
-      label: "Today's Sessions",
-      value: `${completedToday}/${todaySessions.length}`,
-      icon: Calendar,
-      color: 'bg-teal-50 text-teal-700',
-      iconColor: 'text-teal-600',
-    },
-    {
-      label: 'Study Hours',
-      value: plan?.totalHours || 0,
-      icon: Clock,
-      color: 'bg-emerald-50 text-emerald-600',
-      iconColor: 'text-emerald-500',
-    },
-    {
-      label: 'Notes',
-      value: noteCount,
-      icon: Target,
-      color: 'bg-amber-50 text-amber-600',
-      iconColor: 'text-amber-500',
-    },
-  ];
-
+export default function LandingPage() {
   return (
-    <div className="p-8 max-w-6xl mx-auto animate-fade-in">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-800">
-          Good {today.getHours() < 12 ? 'Morning' : today.getHours() < 17 ? 'Afternoon' : 'Evening'}! 👋
-        </h1>
-        <p className="text-slate-500 mt-1">
-          {format(today, 'EEEE, MMMM d, yyyy')} — Here&apos;s your study overview
-        </p>
-      </div>
+    <>
+      <header className="sticky top-0 z-30 border-b border-teal-100/80 bg-white/90 backdrop-blur">
+        <nav
+          aria-label="Main navigation"
+          className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3.5 sm:px-8"
+        >
+          <Link href="/" className="flex items-center gap-2.5">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-teal-700 text-white">
+              <GraduationCap className="h-5 w-5" />
+            </span>
+            <span className="text-lg font-bold tracking-tight text-slate-800">Scheduly</span>
+          </Link>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        {stats.map((stat) => {
-          const Icon = stat.icon;
-          return (
-            <div
-              key={stat.label}
-              className="bg-white rounded-2xl p-5 border border-slate-100 hover-lift cursor-default"
+          <div className="hidden items-center gap-7 text-sm font-medium text-slate-500 sm:flex">
+            <a className="transition-colors hover:text-teal-700" href="#features">Features</a>
+            <a className="transition-colors hover:text-teal-700" href="#how-it-works">How it works</a>
+          </div>
+
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Link
+              href="/login"
+              className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-600 transition-colors hover:bg-teal-50 hover:text-teal-800 sm:px-4"
             >
-              <div className="flex items-center justify-between mb-3">
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${stat.color}`}>
-                  <Icon className={`w-5 h-5 ${stat.iconColor}`} />
-                </div>
-              </div>
-              <p className="text-2xl font-bold text-slate-800">{stat.value}</p>
-              <p className="text-sm text-slate-400 mt-1">{stat.label}</p>
-            </div>
-          );
-        })}
-      </div>
+              Log in
+            </Link>
+            <Link
+              href="/signup"
+              className="rounded-lg bg-teal-700 px-3.5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-100 sm:px-4"
+            >
+              Sign up
+            </Link>
+          </div>
+        </nav>
+      </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Progress Card */}
-        <div className="lg:col-span-2 bg-white rounded-2xl p-6 border border-slate-100">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold text-slate-800 flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-teal-600" />
-              Study Progress
-            </h2>
-            <span className="text-sm font-medium text-teal-700">{progressPercent}%</span>
+      <main>
+        <section className="relative overflow-hidden px-5 pb-16 pt-12 sm:px-8 sm:pb-24 sm:pt-20">
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+            <div className="absolute -right-32 -top-32 h-96 w-96 rounded-full bg-teal-100/70 blur-3xl" />
+            <div className="absolute -bottom-48 left-1/4 h-80 w-80 rounded-full bg-teal-50 blur-3xl" />
           </div>
 
-          {plan ? (
-            <>
-              <div className="w-full bg-slate-100 rounded-full h-3 mb-6">
-                <div
-                  className="h-3 rounded-full gradient-primary transition-all duration-500"
-                  style={{ width: `${progressPercent}%` }}
-                />
+          <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+            <div className="animate-fade-up">
+              <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-teal-100 bg-white px-3.5 py-1.5 text-sm font-medium text-teal-800">
+                <Sparkles className="h-4 w-4" />
+                A calmer way to prepare
+              </p>
+              <h1 className="max-w-2xl text-4xl font-bold leading-[1.1] tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+                Make room for
+                <span className="block text-teal-700">steady progress.</span>
+              </h1>
+              <p className="mt-5 max-w-xl text-base leading-7 text-slate-600 sm:text-lg">
+                Organize your subjects, shape a study plan around your exams, and celebrate the small wins that get you there.
+              </p>
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <Link
+                  href="/signup"
+                  className="group inline-flex items-center gap-2 rounded-xl bg-teal-700 px-5 py-3 text-sm font-semibold text-white shadow-sm shadow-teal-900/10 transition-all hover:-translate-y-0.5 hover:bg-teal-800 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-teal-100"
+                >
+                  Build my study plan
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                </Link>
+                <a
+                  href="#how-it-works"
+                  className="rounded-xl px-4 py-3 text-sm font-semibold text-slate-600 transition-colors hover:bg-white hover:text-teal-800"
+                >
+                  See how it works
+                </a>
               </div>
-
-              <div className="grid grid-cols-3 gap-4 text-center">
-                <div className="bg-slate-50 rounded-xl p-3">
-                  <p className="text-lg font-bold text-slate-700">{totalSessions}</p>
-                  <p className="text-xs text-slate-400">Total Sessions</p>
-                </div>
-                <div className="bg-emerald-50 rounded-xl p-3">
-                  <p className="text-lg font-bold text-emerald-600">{completedTotal}</p>
-                  <p className="text-xs text-slate-400">Completed</p>
-                </div>
-                <div className="bg-amber-50 rounded-xl p-3">
-                  <p className="text-lg font-bold text-amber-600">{totalSessions - completedTotal}</p>
-                  <p className="text-xs text-slate-400">Remaining</p>
-                </div>
-              </div>
-            </>
-          ) : (
-            <div className="text-center py-8">
-              <Sparkles className="w-12 h-12 text-teal-200 mx-auto mb-3" />
-              <p className="text-slate-500 mb-4">No study plan generated yet</p>
-              <Link
-                href="/generate"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl gradient-primary text-white text-sm font-medium hover:shadow-lg hover:shadow-teal-200 transition-all"
-              >
-                <Sparkles className="w-4 h-4" />
-                Generate Study Plan
-              </Link>
+              <p className="mt-5 text-xs text-slate-400">
+                Free to get started <span aria-hidden="true">·</span> Your planner data stays in your local app database
+              </p>
             </div>
-          )}
-        </div>
 
-        {/* Upcoming Exams */}
-        <div className="bg-white rounded-2xl p-6 border border-slate-100">
-          <h2 className="text-lg font-semibold text-slate-800 flex items-center gap-2 mb-4">
-            <AlertTriangle className="w-5 h-5 text-amber-500" />
-            Upcoming Exams
-          </h2>
+            <div className="relative mx-auto w-full max-w-xl animate-fade-up lg:justify-self-end" style={{ animationDelay: '120ms' }}>
+              <svg
+                aria-hidden="true"
+                className="absolute -left-8 top-4 h-20 w-20 animate-doodle-float text-teal-600 sm:-left-12 sm:h-24 sm:w-24"
+                viewBox="0 0 100 100"
+                fill="none"
+              >
+                <path d="M16 62c10-4 14-20 27-25 10-4 14 2 24-5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeDasharray="1 7" />
+                <path d="m60 22 5 10 11 1-8 7 2 11-10-5-9 5 2-11-8-7 11-1 4-10Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+              </svg>
+              <svg
+                aria-hidden="true"
+                className="absolute -right-4 -top-8 h-16 w-16 animate-doodle-float text-teal-500 sm:-right-8 sm:h-20 sm:w-20"
+                style={{ animationDelay: '800ms' }}
+                viewBox="0 0 80 80"
+                fill="none"
+              >
+                <path d="M18 45c10-2 17 2 24 11 5-10 10-15 19-17M40 11v9m22 3-6 7m-32-7 6 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+                <circle cx="42" cy="42" r="28" stroke="currentColor" strokeWidth="2" strokeDasharray="3 6" />
+              </svg>
 
-          {upcomingExams.length > 0 ? (
-            <div className="space-y-3">
-              {upcomingExams.map((subject) => {
-                const daysLeft = differenceInDays(parseISO(subject.examDate), today);
-                const isUrgent = daysLeft <= 3;
+              <div className="relative rounded-3xl border border-teal-100 bg-white p-5 shadow-[0_24px_70px_-35px_rgba(15,118,110,0.35)] sm:p-7">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-teal-700">A little, every day</p>
+                    <h2 className="mt-1 text-xl font-bold text-slate-800 sm:text-2xl">Your study week</h2>
+                  </div>
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-50 text-teal-700">
+                    <CalendarDays className="h-5 w-5" />
+                  </span>
+                </div>
 
-                return (
-                  <div
-                    key={subject.id}
-                    className={`flex items-center gap-3 p-3 rounded-xl border ${
-                      isUrgent ? 'border-red-100 bg-red-50' : 'border-slate-100 bg-slate-50'
-                    }`}
-                  >
+                <div className="mt-6 grid grid-cols-7 gap-1.5 text-center">
+                  {[
+                    ['M', '12'],
+                    ['T', '13'],
+                    ['W', '14'],
+                    ['T', '15'],
+                    ['F', '16'],
+                    ['S', '17'],
+                    ['S', '18'],
+                  ].map(([day, date], index) => (
                     <div
-                      className="w-3 h-3 rounded-full shrink-0"
-                      style={{ backgroundColor: subject.color }}
-                    />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-slate-700 truncate">{subject.name}</p>
-                      <p className="text-xs text-slate-400">
-                        {format(parseISO(subject.examDate), 'MMM d, yyyy')}
-                      </p>
-                    </div>
-                    <span
-                      className={`text-xs font-semibold px-2 py-1 rounded-lg ${
-                        isUrgent
-                          ? 'bg-red-100 text-red-600'
-                          : daysLeft <= 7
-                          ? 'bg-amber-100 text-amber-600'
-                          : 'bg-emerald-100 text-emerald-600'
-                      }`}
+                      key={`${day}-${date}`}
+                      className={`rounded-xl py-2 ${index === 2 ? 'bg-teal-700 text-white' : 'text-slate-500'}`}
                     >
-                      {daysLeft}d left
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <div className="text-center py-6">
-              <CheckCircle2 className="w-10 h-10 text-emerald-200 mx-auto mb-2" />
-              <p className="text-sm text-slate-400">No upcoming exams</p>
-              <Link href="/subjects" className="text-xs text-teal-600 hover:underline mt-1 inline-block">
-                Add subjects →
-              </Link>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Today's Schedule */}
-      {todaySessions.length > 0 && (
-        <div className="mt-6 bg-white rounded-2xl p-6 border border-slate-100">
-          <h2 className="text-lg font-semibold text-slate-800 flex items-center gap-2 mb-4">
-            <Calendar className="w-5 h-5 text-teal-600" />
-            Today&apos;s Schedule
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {todaySessions.map((session) => (
-              <div
-                key={session.id}
-                className={`p-4 rounded-xl border-l-4 ${
-                  session.completed ? 'bg-slate-50 opacity-60' : 'bg-white border border-slate-100'
-                }`}
-                style={{ borderLeftColor: session.color }}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-semibold text-slate-700">{session.subjectName}</span>
-                  {session.completed && <CheckCircle2 className="w-4 h-4 text-emerald-500" />}
+                      <span className={`block text-[10px] ${index === 2 ? 'text-teal-100' : 'text-slate-400'}`}>{day}</span>
+                      <span className="mt-1 block text-sm font-semibold">{date}</span>
+                      {index === 2 ? (
+                        <Check className="mx-auto mt-1 h-3.5 w-3.5" />
+                      ) : (
+                        <span className="mx-auto mt-2 block h-1 w-1 rounded-full bg-teal-400" />
+                      )}
+                    </div>
+                  ))}
                 </div>
-                <p className="text-xs text-slate-400">
-                  {session.startTime} - {session.endTime} · {session.duration}min
-                </p>
-                {session.topics.length > 0 && (
-                  <div className="flex flex-wrap gap-1 mt-2">
-                    {session.topics.slice(0, 2).map((topic) => (
-                      <span key={topic} className="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">
-                        {topic}
-                      </span>
-                    ))}
+
+                <div className="mt-6 rounded-2xl bg-teal-50/80 p-4">
+                  <div className="mb-3 flex items-center justify-between">
+                    <p className="text-sm font-semibold text-slate-700">Today&apos;s focus</p>
+                    <span className="text-xs font-medium text-teal-700">2 sessions</span>
                   </div>
-                )}
+                  <div className="space-y-2.5">
+                    <div className="flex items-center gap-3 rounded-xl bg-white px-3 py-3">
+                      <span className="h-9 w-1 rounded-full bg-teal-600" />
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-semibold text-slate-700">Review key concepts</p>
+                        <p className="mt-0.5 flex items-center gap-1 text-xs text-slate-400">
+                          <BookOpen className="h-3 w-3" /> Biology
+                        </p>
+                      </div>
+                      <span className="flex items-center gap-1 text-xs text-slate-400">
+                        <Clock3 className="h-3 w-3" /> 45m
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-3 rounded-xl bg-white px-3 py-3">
+                      <span className="h-9 w-1 rounded-full bg-teal-400" />
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-semibold text-slate-700">Practice problems</p>
+                        <p className="mt-0.5 flex items-center gap-1 text-xs text-slate-400">
+                          <BookOpen className="h-3 w-3" /> Mathematics
+                        </p>
+                      </div>
+                      <span className="flex items-center gap-1 text-xs text-slate-400">
+                        <Clock3 className="h-3 w-3" /> 60m
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-4 flex items-center gap-2 text-xs text-slate-500">
+                  <CheckCircle2 className="h-4 w-4 text-teal-600" />
+                  Progress you can feel good about
+                </div>
               </div>
-            ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="features" className="scroll-mt-24 border-y border-slate-100 bg-white px-5 py-16 sm:px-8 sm:py-20">
+          <div className="mx-auto max-w-7xl">
+            <div className="mx-auto mb-10 max-w-2xl text-center">
+              <p className="text-sm font-semibold text-teal-700">Made for real study days</p>
+              <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+                Less overwhelm. More direction.
+              </h2>
+              <p className="mt-3 leading-7 text-slate-500">
+                The essentials to help you stay organized without making studying feel like another chore.
+              </p>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-3">
+              {features.map(({ icon: Icon, title, description }, index) => (
+                <article
+                  key={title}
+                  className="animate-fade-up rounded-2xl border border-slate-100 bg-[#fbfefd] p-6 transition-all duration-200 hover:-translate-y-1 hover:border-teal-200 hover:shadow-lg hover:shadow-teal-900/5"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-teal-50 text-teal-700">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <h3 className="mt-5 text-lg font-semibold text-slate-800">{title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-slate-500">{description}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="how-it-works" className="scroll-mt-24 px-5 py-16 sm:px-8 sm:py-20">
+          <div className="mx-auto max-w-7xl">
+            <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
+              <div>
+                <p className="text-sm font-semibold text-teal-700">Simple by design</p>
+                <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+                  Start small.
+                  <span className="block text-teal-700">Keep going.</span>
+                </h2>
+                <p className="mt-4 max-w-md leading-7 text-slate-500">
+                  A few details are all you need to get a plan that feels more manageable.
+                </p>
+              </div>
+              <ol className="space-y-3">
+                {steps.map((step) => (
+                  <li key={step.number} className="flex gap-4 rounded-2xl border border-teal-100 bg-white p-5">
+                    <span className="text-sm font-bold tracking-wide text-teal-700">{step.number}</span>
+                    <div>
+                      <h3 className="font-semibold text-slate-800">{step.title}</h3>
+                      <p className="mt-1 text-sm text-slate-500">{step.description}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <section className="px-5 pb-16 sm:px-8 sm:pb-20">
+          <div className="relative mx-auto max-w-7xl overflow-hidden rounded-3xl bg-teal-800 px-6 py-10 text-center sm:px-12 sm:py-14">
+            <svg aria-hidden="true" className="absolute left-5 top-4 h-20 w-20 text-teal-600/70" viewBox="0 0 100 100" fill="none">
+              <path d="M20 50c15-20 30 20 45 0s20 0 25 4M36 28l4 8 9 1-7 6 2 9-8-4-8 4 2-9-7-6 9-1 4-8Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <p className="text-sm font-medium text-teal-100">One session at a time</p>
+            <h2 className="mx-auto mt-2 max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              Your next study day can feel clearer.
+            </h2>
+            <Link
+              href="/signup"
+              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-teal-800 transition-all hover:-translate-y-0.5 hover:bg-teal-50 focus:outline-none focus:ring-4 focus:ring-white/30"
+            >
+              Get started
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </section>
+      </main>
+
+      <footer className="border-t border-slate-100 bg-white px-5 py-6 sm:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 text-sm text-slate-400 sm:flex-row">
+          <span className="font-semibold text-teal-800">Scheduly</span>
+          <span>Small steps make progress.</span>
+          <div className="flex gap-4">
+            <Link href="/login" className="transition-colors hover:text-teal-700">Log in</Link>
+            <Link href="/signup" className="transition-colors hover:text-teal-700">Sign up</Link>
           </div>
         </div>
-      )}
-    </div>
+      </footer>
+    </>
   );
 }

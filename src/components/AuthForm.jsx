@@ -34,7 +34,7 @@ export default function AuthForm({ mode }) {
       if (!response.ok) {
         throw new Error(result.error || 'Authentication failed');
       }
-      router.replace('/');
+      router.replace('/dashboard');
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : 'Authentication failed');
       setLoading(false);

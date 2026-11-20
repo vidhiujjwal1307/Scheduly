@@ -8,6 +8,7 @@ export default function AppShell({ children }) {
   const pathname = usePathname();
   const router = useRouter();
   const isAuthPage = pathname === '/login' || pathname === '/signup';
+  const isPublicPage = pathname === '/' || isAuthPage;
   const [status, setStatus] = useState('checking');
   const [user, setUser] = useState(null);
   const [verifiedPath, setVerifiedPath] = useState(null);
@@ -28,8 +29,8 @@ export default function AppShell({ children }) {
         setUser(result.user);
         setStatus(result.user ? 'signed-in' : 'signed-out');
         setVerifiedPath(pathname);
-        if (result.user && isAuthPage) router.replace('/');
-        if (!result.user && !isAuthPage) router.replace('/login');
+        if (result.user && isAuthPage) router.replace('/dashboard');
+        if (!result.user && !isPublicPage) router.replace('/login');
       })
       .catch(() => {
         if (active) {
@@ -41,7 +42,7 @@ export default function AppShell({ children }) {
     return () => {
       active = false;
     };
-  }, [isAuthPage, pathname, router]);
+  }, [isAuthPage, isPublicPage, pathname, router]);
 
   if (verifiedPath === pathname && status === 'error') {
     return (
@@ -69,7 +70,7 @@ export default function AppShell({ children }) {
     );
   }
 
-  if (isAuthPage) return children;
+  if (isAuthPage || pathname === '/') return children;
   if (status !== 'signed-in') return null;
 
   return (

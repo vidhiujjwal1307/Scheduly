@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 
 const navItems = [
-  { href: '/', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/subjects', label: 'Subjects', icon: BookOpen },
   { href: '/generate', label: 'Generate Plan', icon: Sparkles },
   { href: '/timetable', label: 'Timetable', icon: Calendar },
@@ -46,7 +46,7 @@ export default function Sidebar({ user }) {
     <aside className="w-64 h-screen bg-white border-r border-slate-200 flex flex-col shrink-0">
       {/* Logo */}
       <div className="p-6 border-b border-slate-100">
-        <Link href="/" className="flex items-center gap-3">
+        <Link href="/dashboard" className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center shadow-lg shadow-teal-200">
             <GraduationCap className="w-5 h-5 text-white" />
           </div>
