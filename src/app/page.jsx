@@ -60,15 +60,15 @@ export default function Dashboard() {
       label: 'Subjects',
       value: subjects.length,
       icon: BookOpen,
-      color: 'bg-indigo-50 text-indigo-600',
-      iconColor: 'text-indigo-500',
+      color: 'bg-teal-50 text-teal-700',
+      iconColor: 'text-teal-600',
     },
     {
       label: "Today's Sessions",
       value: `${completedToday}/${todaySessions.length}`,
       icon: Calendar,
-      color: 'bg-purple-50 text-purple-600',
-      iconColor: 'text-purple-500',
+      color: 'bg-teal-50 text-teal-700',
+      iconColor: 'text-teal-600',
     },
     {
       label: 'Study Hours',
@@ -124,10 +124,10 @@ export default function Dashboard() {
         <div className="lg:col-span-2 bg-white rounded-2xl p-6 border border-slate-100">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-lg font-semibold text-slate-800 flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-indigo-500" />
+              <TrendingUp className="w-5 h-5 text-teal-600" />
               Study Progress
             </h2>
-            <span className="text-sm font-medium text-indigo-600">{progressPercent}%</span>
+            <span className="text-sm font-medium text-teal-700">{progressPercent}%</span>
           </div>
 
           {plan ? (
@@ -156,11 +156,11 @@ export default function Dashboard() {
             </>
           ) : (
             <div className="text-center py-8">
-              <Sparkles className="w-12 h-12 text-indigo-200 mx-auto mb-3" />
+              <Sparkles className="w-12 h-12 text-teal-200 mx-auto mb-3" />
               <p className="text-slate-500 mb-4">No study plan generated yet</p>
               <Link
                 href="/generate"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl gradient-primary text-white text-sm font-medium hover:shadow-lg hover:shadow-indigo-200 transition-all"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl gradient-primary text-white text-sm font-medium hover:shadow-lg hover:shadow-teal-200 transition-all"
               >
                 <Sparkles className="w-4 h-4" />
                 Generate Study Plan
@@ -218,7 +218,7 @@ export default function Dashboard() {
             <div className="text-center py-6">
               <CheckCircle2 className="w-10 h-10 text-emerald-200 mx-auto mb-2" />
               <p className="text-sm text-slate-400">No upcoming exams</p>
-              <Link href="/subjects" className="text-xs text-indigo-500 hover:underline mt-1 inline-block">
+              <Link href="/subjects" className="text-xs text-teal-600 hover:underline mt-1 inline-block">
                 Add subjects →
               </Link>
             </div>
@@ -230,7 +230,7 @@ export default function Dashboard() {
       {todaySessions.length > 0 && (
         <div className="mt-6 bg-white rounded-2xl p-6 border border-slate-100">
           <h2 className="text-lg font-semibold text-slate-800 flex items-center gap-2 mb-4">
-            <Calendar className="w-5 h-5 text-indigo-500" />
+            <Calendar className="w-5 h-5 text-teal-600" />
             Today&apos;s Schedule
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">

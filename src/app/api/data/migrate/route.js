@@ -1,4 +1,5 @@
 import { importLegacyData } from '@/lib/database';
+import { getAuthenticatedUser } from '@/lib/auth';
 
 const validCollections = new Set(['subjects', 'studyPlans', 'notes', 'preferences']);
 
@@ -10,6 +11,11 @@ function isValidValue(collection, value) {
 }
 
 export async function POST(request) {
+  const user = getAuthenticatedUser(request);
+  if (!user) {
+    return Response.json({ error: 'Please sign in before importing browser data' }, { status: 401 });
+  }
+
   let body;
   try {
     body = await request.json();
@@ -26,5 +32,5 @@ export async function POST(request) {
     }
   }
 
-  return Response.json({ imported: importLegacyData(body.values) });
+  return Response.json({ imported: importLegacyData(body.values, user.id) });
 }

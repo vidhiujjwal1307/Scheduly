@@ -1,4 +1,5 @@
 import { getCollection, saveCollection } from '@/lib/database';
+import { getAuthenticatedUser } from '@/lib/auth';
 
 const validCollections = new Set(['subjects', 'studyPlans', 'notes', 'preferences']);
 
@@ -21,19 +22,27 @@ function isValidValue(collection, value) {
   return Array.isArray(value);
 }
 
-export async function GET(_request, { params }) {
+export async function GET(request, { params }) {
   const { collection } = await params;
   if (!validCollections.has(collection)) {
     return Response.json({ error: 'Unknown data collection' }, { status: 404 });
   }
+  const user = getAuthenticatedUser(request);
+  if (!user) {
+    return Response.json({ error: 'Please sign in to access your data' }, { status: 401 });
+  }
 
-  return responseForCollection(collection, getCollection(collection));
+  return responseForCollection(collection, getCollection(collection, user.id));
 }
 
 export async function PUT(request, { params }) {
   const { collection } = await params;
   if (!validCollections.has(collection)) {
     return Response.json({ error: 'Unknown data collection' }, { status: 404 });
+  }
+  const user = getAuthenticatedUser(request);
+  if (!user) {
+    return Response.json({ error: 'Please sign in to update your data' }, { status: 401 });
   }
 
   let body;
@@ -49,13 +58,13 @@ export async function PUT(request, { params }) {
 
   let value = body.value;
   if (collection === 'preferences') {
-    const currentPreferences = getCollection(collection);
+    const currentPreferences = getCollection(collection, user.id);
     value = {
       ...currentPreferences,
       ...body.value,
       groqApiKey: body.value.groqApiKey || currentPreferences.groqApiKey,
     };
   }
-  saveCollection(collection, value);
+  saveCollection(collection, value, user.id);
   return responseForCollection(collection, value);
 }

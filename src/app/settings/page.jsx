@@ -31,14 +31,14 @@ export default function SettingsPage() {
   return (
     <div className="p-8 max-w-3xl mx-auto animate-fade-in">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-800 flex items-center gap-3"><Settings className="w-8 h-8 text-indigo-500" /> Settings</h1>
+        <h1 className="text-3xl font-bold text-slate-800 flex items-center gap-3"><Settings className="w-8 h-8 text-teal-600" /> Settings</h1>
         <p className="text-slate-500 mt-1">Configure your study preferences and AI key</p>
       </div>
 
       <div className="bg-white rounded-2xl p-6 border border-slate-100 space-y-6">
         <div>
-          <label className="text-sm font-medium text-slate-700 flex items-center gap-2 mb-2"><KeyRound className="w-4 h-4 text-indigo-500" /> Groq API Key</label>
-          <input type="password" value={prefs.groqApiKey} onChange={(event) => setPrefs({ ...prefs, groqApiKey: event.target.value })} placeholder="Enter your Groq API key" className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-indigo-500" />
+          <label className="text-sm font-medium text-slate-700 flex items-center gap-2 mb-2"><KeyRound className="w-4 h-4 text-teal-600" /> Groq API Key</label>
+          <input type="password" value={prefs.groqApiKey} onChange={(event) => setPrefs({ ...prefs, groqApiKey: event.target.value })} placeholder="Enter your Groq API key" className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-teal-500" />
           <p className="text-xs text-slate-400 mt-2">
             {prefs.hasGroqApiKey
               ? 'A key is saved. Leave this blank to keep it, or enter a new key.'
@@ -48,18 +48,18 @@ export default function SettingsPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="text-sm font-medium text-slate-700 flex items-center gap-2 mb-2"><Clock className="w-4 h-4 text-purple-500" /> Daily Study Hours</label>
-            <input type="number" min="1" max="12" value={prefs.dailyStudyHours} onChange={(event) => setPrefs({ ...prefs, dailyStudyHours: Number(event.target.value) })} className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-indigo-500" />
+            <label className="text-sm font-medium text-slate-700 flex items-center gap-2 mb-2"><Clock className="w-4 h-4 text-teal-600" /> Daily Study Hours</label>
+            <input type="number" min="1" max="12" value={prefs.dailyStudyHours} onChange={(event) => setPrefs({ ...prefs, dailyStudyHours: Number(event.target.value) })} className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-teal-500" />
           </div>
           <div>
-            <label className="text-sm font-medium text-slate-700 flex items-center gap-2 mb-2"><Clock className="w-4 h-4 text-indigo-500" /> Preferred Start Time</label>
-            <input type="time" value={prefs.preferredStartTime} onChange={(event) => setPrefs({ ...prefs, preferredStartTime: event.target.value })} className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-indigo-500" />
+            <label className="text-sm font-medium text-slate-700 flex items-center gap-2 mb-2"><Clock className="w-4 h-4 text-teal-600" /> Preferred Start Time</label>
+            <input type="time" value={prefs.preferredStartTime} onChange={(event) => setPrefs({ ...prefs, preferredStartTime: event.target.value })} className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-teal-500" />
           </div>
         </div>
 
         <div>
           <label className="text-sm font-medium text-slate-700 flex items-center gap-2 mb-2"><Coffee className="w-4 h-4 text-emerald-500" /> Break Duration (minutes)</label>
-          <input type="number" min="5" max="60" value={prefs.breakDuration} onChange={(event) => setPrefs({ ...prefs, breakDuration: Number(event.target.value) })} className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-indigo-500" />
+          <input type="number" min="5" max="60" value={prefs.breakDuration} onChange={(event) => setPrefs({ ...prefs, breakDuration: Number(event.target.value) })} className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-teal-500" />
         </div>
 
         <div className="flex justify-end">

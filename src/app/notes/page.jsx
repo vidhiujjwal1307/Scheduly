@@ -74,13 +74,13 @@ export default function NotesPage() {
   return (
     <div className="p-8 max-w-5xl mx-auto animate-fade-in">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-800 flex items-center gap-3"><StickyNote className="w-8 h-8 text-indigo-500" /> Notes</h1>
+        <h1 className="text-3xl font-bold text-slate-800 flex items-center gap-3"><StickyNote className="w-8 h-8 text-teal-600" /> Notes</h1>
         <p className="text-slate-500 mt-1">Capture quick study notes and reminders</p>
       </div>
 
       <div className="bg-white rounded-2xl p-6 border border-slate-100 mb-6">
-        <input value={title} onChange={(event) => setTitle(event.target.value)} placeholder="Note title" className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-indigo-500 mb-3" />
-        <textarea value={content} onChange={(event) => setContent(event.target.value)} placeholder="Write something..." rows={4} className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-indigo-500 resize-none" />
+        <input value={title} onChange={(event) => setTitle(event.target.value)} placeholder="Note title" className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-teal-500 mb-3" />
+        <textarea value={content} onChange={(event) => setContent(event.target.value)} placeholder="Write something..." rows={4} className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-teal-500 resize-none" />
         <div className="flex justify-end mt-3">
           <button onClick={addNote} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl gradient-primary text-white text-sm font-medium"><Plus className="w-4 h-4" /> Add Note</button>
         </div>
@@ -98,7 +98,7 @@ export default function NotesPage() {
               <div className="flex items-start justify-between gap-3">
                 <h2 className="font-semibold text-slate-800">{note.title}</h2>
                 <div className="flex shrink-0">
-                  <button onClick={() => togglePin(note.id)} className={`p-1.5 rounded-lg ${note.pinned ? 'text-indigo-600' : 'text-slate-400'}`} aria-label="Pin note"><Pin className="w-4 h-4" /></button>
+                  <button onClick={() => togglePin(note.id)} className={`p-1.5 rounded-lg ${note.pinned ? 'text-teal-700' : 'text-slate-400'}`} aria-label="Pin note"><Pin className="w-4 h-4" /></button>
                   <button onClick={() => deleteNote(note.id)} className="p-1.5 rounded-lg text-slate-400 hover:text-red-600" aria-label="Delete note"><Trash2 className="w-4 h-4" /></button>
                 </div>
               </div>

@@ -148,7 +148,7 @@ Return only the JSON object, with no markdown or explanation. Use exact subject 
       duration: session.duration,
       topics: session.topics,
       completed: false,
-      color: subject.color || '#6366f1',
+      color: subject.color || '#0f766e',
     };
   });
 

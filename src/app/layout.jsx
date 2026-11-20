@@ -1,6 +1,8 @@
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
-import Sidebar from "@/components/Sidebar";
+import AppShell from "@/components/AppShell";
+
+export const instant = false;
 
 export const metadata = {
   title: "Scheduly",
@@ -11,12 +13,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="antialiased">
-        <div className="flex h-screen overflow-hidden">
-          <Sidebar />
-          <main className="flex-1 overflow-y-auto bg-slate-50">
-            {children}
-          </main>
-        </div>
+        <AppShell>{children}</AppShell>
         <Toaster
           position="top-right"
           toastOptions={{

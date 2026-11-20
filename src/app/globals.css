@@ -1,19 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
+  --background: #f7fbfa;
   --foreground: #0f172a;
   --card: #ffffff;
   --card-foreground: #0f172a;
-  --primary: #f163d7;
+  --primary: #0f766e;
   --primary-foreground: #ffffff;
   --secondary: #f1f5f9;
   --secondary-foreground: #0f172a;
   --muted: #f1f5f9;
   --muted-foreground: #64748b;
   --border: #e2e8f0;
-  --ring: #6366f1;
-  --accent: #8b5cf6;
+  --ring: #14b8a6;
+  --accent: #0f766e;
 }
 
 * {
@@ -51,14 +51,11 @@ body {
   }
 
   .gradient-primary {
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a78bfa 100%);
+    background: #0f766e;
   }
 
   .gradient-text {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #0f766e;
   }
 
   .hover-lift {

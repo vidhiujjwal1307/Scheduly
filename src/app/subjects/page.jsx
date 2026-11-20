@@ -131,7 +131,7 @@ export default function SubjectsPage() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold text-slate-800 flex items-center gap-3">
-            <BookOpen className="w-8 h-8 text-indigo-500" />
+            <BookOpen className="w-8 h-8 text-teal-600" />
             Subjects
           </h1>
           <p className="text-slate-500 mt-1">Manage your subjects, exam dates, and topics</p>
@@ -144,7 +144,7 @@ export default function SubjectsPage() {
           className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium transition-all ${
             showForm
               ? 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-              : 'gradient-primary text-white hover:shadow-lg hover:shadow-indigo-200'
+              : 'gradient-primary text-white hover:shadow-lg hover:shadow-teal-200'
           }`}
         >
           {showForm ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
@@ -169,7 +169,7 @@ export default function SubjectsPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g., Mathematics"
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
                 />
               </div>
               <div>
@@ -180,7 +180,7 @@ export default function SubjectsPage() {
                   type="date"
                   value={examDate}
                   onChange={(e) => setExamDate(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
                 />
               </div>
             </div>
@@ -214,7 +214,7 @@ export default function SubjectsPage() {
                       type="button"
                       onClick={() => setColor(c)}
                       className={`w-8 h-8 rounded-full transition-all ${
-                        color === c ? 'ring-2 ring-offset-2 ring-indigo-400 scale-110' : 'hover:scale-105'
+                        color === c ? 'ring-2 ring-offset-2 ring-teal-400 scale-110' : 'hover:scale-105'
                       }`}
                       style={{ backgroundColor: c }}
                     />
@@ -232,7 +232,7 @@ export default function SubjectsPage() {
                 value={topicsText}
                 onChange={(e) => setTopicsText(e.target.value)}
                 placeholder="e.g., Calculus, Linear Algebra, Statistics"
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
               />
             </div>
 
@@ -249,7 +249,7 @@ export default function SubjectsPage() {
               </button>
               <button
                 type="submit"
-                className="px-6 py-2.5 rounded-xl gradient-primary text-white text-sm font-medium hover:shadow-lg hover:shadow-indigo-200 transition-all"
+                className="px-6 py-2.5 rounded-xl gradient-primary text-white text-sm font-medium hover:shadow-lg hover:shadow-teal-200 transition-all"
               >
                 {editingId ? 'Update Subject' : 'Add Subject'}
               </button>
@@ -268,7 +268,7 @@ export default function SubjectsPage() {
           </p>
           <button
             onClick={() => setShowForm(true)}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl gradient-primary text-white text-sm font-medium hover:shadow-lg hover:shadow-indigo-200 transition-all"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl gradient-primary text-white text-sm font-medium hover:shadow-lg hover:shadow-teal-200 transition-all"
           >
             <Plus className="w-4 h-4" />
             Add Your First Subject
@@ -319,7 +319,7 @@ export default function SubjectsPage() {
                   </button>
                   <button
                     onClick={() => handleEdit(subject)}
-                    className="p-2 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all"
+                    className="p-2 rounded-lg text-slate-400 hover:text-teal-700 hover:bg-teal-50 transition-all"
                   >
                     <Edit3 className="w-4 h-4" />
                   </button>

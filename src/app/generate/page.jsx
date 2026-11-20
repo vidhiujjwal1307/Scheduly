@@ -74,7 +74,7 @@ export default function GeneratePage() {
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-slate-800 flex items-center gap-3">
-          <Sparkles className="w-8 h-8 text-indigo-500" />
+          <Sparkles className="w-8 h-8 text-teal-600" />
           Generate Study Plan
         </h1>
         <p className="text-slate-500 mt-1">
@@ -96,7 +96,7 @@ export default function GeneratePage() {
               Groq API Key {hasApiKey ? 'configured' : 'not set'}
             </span>
             {!hasApiKey && (
-              <Link href="/settings" className="text-xs text-indigo-500 hover:underline ml-auto">
+              <Link href="/settings" className="text-xs text-teal-600 hover:underline ml-auto">
                 Set in Settings →
               </Link>
             )}
@@ -111,7 +111,7 @@ export default function GeneratePage() {
               {subjects.length} subject{subjects.length !== 1 ? 's' : ''} added
             </span>
             {subjects.length === 0 && (
-              <Link href="/subjects" className="text-xs text-indigo-500 hover:underline ml-auto">
+              <Link href="/subjects" className="text-xs text-teal-600 hover:underline ml-auto">
                 Add Subjects →
               </Link>
             )}
@@ -123,15 +123,15 @@ export default function GeneratePage() {
       <div className="bg-white rounded-2xl p-6 border border-slate-100 mb-6">
         <h3 className="text-base font-semibold text-slate-800 mb-4">Plan Configuration</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-indigo-50 rounded-xl p-4 text-center">
-            <Clock className="w-6 h-6 text-indigo-500 mx-auto mb-2" />
-            <p className="text-lg font-bold text-indigo-700">{prefs.dailyStudyHours}h/day</p>
-            <p className="text-xs text-indigo-400">Daily Study Hours</p>
+          <div className="bg-teal-50 rounded-xl p-4 text-center">
+            <Clock className="w-6 h-6 text-teal-600 mx-auto mb-2" />
+            <p className="text-lg font-bold text-teal-800">{prefs.dailyStudyHours}h/day</p>
+            <p className="text-xs text-teal-500">Daily Study Hours</p>
           </div>
-          <div className="bg-purple-50 rounded-xl p-4 text-center">
-            <Calendar className="w-6 h-6 text-purple-500 mx-auto mb-2" />
-            <p className="text-lg font-bold text-purple-700">{prefs.preferredStartTime}</p>
-            <p className="text-xs text-purple-400">Start Time</p>
+          <div className="bg-teal-50 rounded-xl p-4 text-center">
+            <Calendar className="w-6 h-6 text-teal-600 mx-auto mb-2" />
+            <p className="text-lg font-bold text-teal-800">{prefs.preferredStartTime}</p>
+            <p className="text-xs text-teal-500">Start Time</p>
           </div>
           <div className="bg-emerald-50 rounded-xl p-4 text-center">
             <BookOpen className="w-6 h-6 text-emerald-500 mx-auto mb-2" />
@@ -168,7 +168,7 @@ export default function GeneratePage() {
           className={`inline-flex items-center gap-3 px-8 py-4 rounded-2xl text-base font-semibold transition-all ${
             loading || !hasApiKey || subjects.length === 0
               ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
-              : 'gradient-primary text-white hover:shadow-xl hover:shadow-indigo-200 hover:-translate-y-0.5'
+              : 'gradient-primary text-white hover:shadow-xl hover:shadow-teal-200 hover:-translate-y-0.5'
           }`}
         >
           {loading ? (

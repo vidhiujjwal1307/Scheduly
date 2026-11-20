@@ -1,9 +1,15 @@
 import { getCollection, saveCollection } from '@/lib/database';
+import { getAuthenticatedUser } from '@/lib/auth';
 import { generateStudyPlan } from '@/lib/groq';
 
-export async function POST() {
-  const subjects = getCollection('subjects');
-  const preferences = getCollection('preferences');
+export async function POST(request) {
+  const user = getAuthenticatedUser(request);
+  if (!user) {
+    return Response.json({ error: 'Please sign in to generate a study plan' }, { status: 401 });
+  }
+
+  const subjects = getCollection('subjects', user.id);
+  const preferences = getCollection('preferences', user.id);
 
   if (subjects.length === 0) {
     return Response.json({ error: 'Add at least one subject before generating a plan' }, { status: 400 });
@@ -20,8 +26,8 @@ export async function POST() {
       preferences.preferredStartTime,
       preferences.breakDuration
     );
-    const plans = getCollection('studyPlans');
-    saveCollection('studyPlans', [...plans, plan]);
+    const plans = getCollection('studyPlans', user.id);
+    saveCollection('studyPlans', [...plans, plan], user.id);
     return Response.json({ plan });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown generation error';
