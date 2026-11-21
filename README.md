@@ -27,7 +27,7 @@ Scheduly is an AI-powered study planner that helps students organise subjects, p
 
 - Node.js **22.13.0 or newer**
 - npm
-- A [Groq API key](https://console.groq.com/keys) for AI study-plan generation
+
 
 ### 1. Clone the repository
 
