@@ -18,4 +18,4 @@ Open [http://localhost:3000](http://localhost:3000). The database is created at 
 
 Create an account or sign in to use the planner. Passwords are stored as scrypt hashes, sessions use HTTP-only cookies, and each account's subjects, plans, notes, preferences, and Groq key are isolated in the local SQLite database. The first account receives existing planner data from the database.
 
-Add your Groq API key in Settings. It is saved in the local database and only sent to Groq when generating a study plan. Mark sessions complete on the Learning Calendar to track your progress.
+Configure `GROQ_API_KEY` in `.env.local` (copy `.env.example` to `.env.local` and set the key), or add the key in Settings. The environment variable is used before the per-user Settings key. Mark sessions complete on the Learning Calendar to track your progress.

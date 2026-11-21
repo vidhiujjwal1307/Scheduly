@@ -11,7 +11,7 @@ function responseForCollection(collection, value) {
   const { groqApiKey, ...publicPreferences } = value;
   return Response.json({
     value: { ...publicPreferences, groqApiKey: '' },
-    hasGroqApiKey: Boolean(groqApiKey),
+    hasGroqApiKey: Boolean(process.env.GROQ_API_KEY || groqApiKey),
   });
 }
 

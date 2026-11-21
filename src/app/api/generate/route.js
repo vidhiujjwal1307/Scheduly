@@ -14,13 +14,14 @@ export async function POST(request) {
   if (subjects.length === 0) {
     return Response.json({ error: 'Add at least one subject before generating a plan' }, { status: 400 });
   }
-  if (!preferences.groqApiKey) {
-    return Response.json({ error: 'Set your Groq API key in Settings first' }, { status: 400 });
+  const apiKey = process.env.GROQ_API_KEY || preferences.groqApiKey;
+  if (!apiKey) {
+    return Response.json({ error: 'Set GROQ_API_KEY in .env.local or add it in Settings' }, { status: 400 });
   }
 
   try {
     const plan = await generateStudyPlan(
-      preferences.groqApiKey,
+      apiKey,
       subjects,
       preferences.dailyStudyHours,
       preferences.preferredStartTime,
