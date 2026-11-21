@@ -29,7 +29,9 @@ function migrateLegacyData() {
             value.geminiApiKey
           ) {
             delete value.geminiApiKey;
-            value.groqApiKey = value.groqApiKey || '';
+          }
+          if (collection === 'preferences' && value !== null && typeof value === 'object') {
+            delete value.groqApiKey;
           }
           values[collection] = value;
         }

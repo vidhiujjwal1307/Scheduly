@@ -8,10 +8,12 @@ function responseForCollection(collection, value) {
     return Response.json({ value });
   }
 
-  const { groqApiKey, ...publicPreferences } = value;
+  const publicPreferences = { ...value };
+  delete publicPreferences.groqApiKey;
+  delete publicPreferences.geminiApiKey;
   return Response.json({
-    value: { ...publicPreferences, groqApiKey: '' },
-    hasGroqApiKey: Boolean(process.env.GROQ_API_KEY || groqApiKey),
+    value: publicPreferences,
+    hasGroqApiKey: Boolean(process.env.GROQ_API_KEY),
   });
 }
 
@@ -62,8 +64,8 @@ export async function PUT(request, { params }) {
     value = {
       ...currentPreferences,
       ...body.value,
-      groqApiKey: body.value.groqApiKey || currentPreferences.groqApiKey,
     };
+    delete value.groqApiKey;
   }
   saveCollection(collection, value, user.id);
   return responseForCollection(collection, value);

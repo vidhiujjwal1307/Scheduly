@@ -38,7 +38,7 @@ export default function GeneratePage() {
 
   const handleGenerate = async () => {
     if (!hasApiKey) {
-      toast.error('Please set your Groq API key in Settings first');
+      toast.error('Configure GROQ_API_KEY in .env.local, then restart the app');
       return;
     }
     if (subjects.length === 0) {

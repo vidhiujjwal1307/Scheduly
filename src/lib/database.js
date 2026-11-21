@@ -62,9 +62,16 @@ try {
   const savedPreferences = JSON.parse(
     database.prepare('SELECT value FROM app_data WHERE collection = ?').get('preferences').value
   );
+  let migrated = false;
   if (Object.hasOwn(savedPreferences, 'geminiApiKey')) {
     delete savedPreferences.geminiApiKey;
-    savedPreferences.groqApiKey = savedPreferences.groqApiKey || '';
+    migrated = true;
+  }
+  if (Object.hasOwn(savedPreferences, 'groqApiKey')) {
+    delete savedPreferences.groqApiKey;
+    migrated = true;
+  }
+  if (migrated) {
     database
       .prepare('UPDATE app_data SET value = ?, updated_at = ? WHERE collection = ?')
       .run(JSON.stringify(savedPreferences), new Date().toISOString(), 'preferences');

@@ -14,9 +14,9 @@ export async function POST(request) {
   if (subjects.length === 0) {
     return Response.json({ error: 'Add at least one subject before generating a plan' }, { status: 400 });
   }
-  const apiKey = process.env.GROQ_API_KEY || preferences.groqApiKey;
+  const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) {
-    return Response.json({ error: 'Set GROQ_API_KEY in .env.local or add it in Settings' }, { status: 400 });
+    return Response.json({ error: 'Configure GROQ_API_KEY in .env.local, then restart the app' }, { status: 400 });
   }
 
   try {

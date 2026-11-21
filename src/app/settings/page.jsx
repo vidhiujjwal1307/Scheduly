@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Settings, KeyRound, Clock, Coffee } from 'lucide-react';
+import { Settings, KeyRound, Clock, Coffee, CheckCircle, AlertCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { getPreferences, savePreferences } from '@/lib/storage';
 import { DEFAULT_PREFERENCES } from '@/lib/constants';
@@ -38,12 +38,23 @@ export default function SettingsPage() {
       <div className="bg-white rounded-2xl p-6 border border-slate-100 space-y-6">
         <div>
           <label className="text-sm font-medium text-slate-700 flex items-center gap-2 mb-2"><KeyRound className="w-4 h-4 text-teal-600" /> Groq API Key</label>
-          <input type="password" value={prefs.groqApiKey} onChange={(event) => setPrefs({ ...prefs, groqApiKey: event.target.value })} placeholder="Enter your Groq API key" className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-teal-500" />
-          <p className="text-xs text-slate-400 mt-2">
-            {prefs.hasGroqApiKey
-              ? 'A key is saved. Leave this blank to keep it, or enter a new key.'
-              : 'Stored in the local database. Sent to Groq only when you generate a study plan.'}
-          </p>
+          {prefs.hasGroqApiKey ? (
+            <div className="flex items-start gap-3 rounded-xl border border-emerald-100 bg-emerald-50 p-4">
+              <CheckCircle className="mt-0.5 h-5 w-5 text-emerald-600" />
+              <div>
+                <p className="text-sm font-medium text-emerald-800">Groq API key configured</p>
+                <p className="mt-1 text-xs text-emerald-600">The app is using GROQ_API_KEY from its code environment.</p>
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-start gap-3 rounded-xl border border-amber-100 bg-amber-50 p-4">
+              <AlertCircle className="mt-0.5 h-5 w-5 text-amber-600" />
+              <div>
+                <p className="text-sm font-medium text-amber-800">Groq API key not configured</p>
+                <p className="mt-1 text-xs text-amber-700">Add it to .env.local and restart the app. No key entry is required in the Settings page.</p>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

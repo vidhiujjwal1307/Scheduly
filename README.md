@@ -27,7 +27,7 @@ Scheduly is an AI-powered study planner that helps students organise subjects, p
 
 - Node.js **22.13.0 or newer**
 - npm
-
+- A Groq API key for AI study-plan generation
 
 ### 1. Clone the repository
 
@@ -56,7 +56,7 @@ Add your Groq API key to `.env.local`:
 GROQ_API_KEY=your_groq_api_key
 ```
 
-You can also add your API key in the app's Settings. The environment variable takes precedence over the key saved in Settings.
+Groq API keys are configured through the server environment only. Do not enter or store the key in Settings.
 
 ### 4. Run the development server
 

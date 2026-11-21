@@ -28,5 +28,4 @@ export const DEFAULT_PREFERENCES = {
   dailyStudyHours: 4,
   preferredStartTime: '09:00',
   breakDuration: 15,
-  groqApiKey: '',
 };
